@@ -36,6 +36,14 @@ UzPassportReader is an OCR API that processes images of Uzbek passports and ID c
 - pip
 - Min RAM 8GB
 
+## 🧪 Tested Environment
+
+The project installation and runtime were tested on the following environment:
+
+- **OS**: Debian GNU/Linux 13 (trixie)
+- **Architecture**: x86_64
+- **Python**: 3.12/3.13
+
 ### Installation
 
 1. **Clone the repository**:
