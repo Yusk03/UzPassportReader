@@ -1,6 +1,4 @@
-from typing import Optional
-
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import HTTPException, Depends
 
 from app.parser.id_card.parser import parse_id_card
 from app.parser.passport.parser import parse_passport
@@ -8,11 +6,11 @@ from app.parser.passport.parser import parse_passport
 
 from app.services.ocr_service import extract_texts
 from app.services.image_processing import read_and_validate_image, extract_qr
-from app.services.open_api import app
+from app.services.api import app
 
 from app.schemas.ocr_response import OcrResponse, IdCardResponse, PassportResponse
 from app.schemas.response import ERROR_401
-from app.schemas.ocr_request import PassportForm, IdCardForm, get_ocr_form
+from app.schemas.ocr_request import get_ocr_form
 
 
 OCR_DESC = """
