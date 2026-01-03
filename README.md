@@ -35,17 +35,21 @@ UzPassportReader is an OCR API that processes images of Uzbek passports and ID c
 - Python 3.8+
 - pip
 - Min RAM 8GB
-- CPU required instruction sets SSE and AVX
+- CPU required instruction sets SSE and AVX, AVX2 (recommended FMA3)
 
-## 🧪 Tested Environment
+## 🧪 Tested Environments
 
-The project installation and runtime were tested on the following environment:
+The project installation and runtime were tested on the following environments:
 
-- **OS**: Debian GNU/Linux 13 (trixie)
+### Debian GNU/Linux 13 (trixie)
 - **Architecture**: x86_64
-- **Python**: 3.12/3.13
+- **Python**: 3.12, 3.13
 
-### Installation
+### Debian GNU/Linux 12 (bookworm)
+- **Architecture**: x86_64
+- **Python**: 3.11
+
+## Installation
 
 1. **Clone the repository**:
    ```bash
@@ -66,25 +70,25 @@ The project installation and runtime were tested on the following environment:
 
    **Note**: PaddleOCR installation may take some time as it downloads model files on first use.
 
-4. **Configure environment** (optional):
+4. **Configure environment**:
    ```bash
    cp .env.example .env
-   # Edit .env and set your API_KEY if needed
+   # Edit .env and set your API_KEY !!REQUIRED!!
    ```
 
-### Running the Server
+## Running the Server
 
 Start the server with uvicorn:
 
 ```bash
-uvicorn app.main:app --host 0.0.0.0 --port 8000
+uvicorn app.main:app --host 0.0.0.0 --port 18000 --workers 4
 ```
 
-The API will be available at `http://localhost:8000`
+The API will be available at `http://localhost:18000`
 
-- **Swagger UI**: `http://localhost:8000/docs`
-- **ReDoc**: `http://localhost:8000/redoc`
-- **OpenAPI JSON**: `http://localhost:8000/openapi.json`
+- **Swagger UI**: `http://localhost:18000/docs`
+- **ReDoc**: `http://localhost:18000/redoc`
+- **OpenAPI JSON**: `http://localhost:18000/openapi.json`
 
 ## 📚 API Documentation
 
@@ -171,17 +175,19 @@ The response format depends on the document type:
 
 **Passport**:
 ```bash
-curl -X POST "http://localhost:8000/ocr" \
+curl -X POST "http://localhost:18000/ocr" \
   -F "isIdCard=false" \
-  -F "frontPhoto=@passport_front.jpg"
+  -F "frontPhoto=@passport_front.jpg"\
+  -H "Authorization: Bearer TEST123"
 ```
 
 **ID Card**:
 ```bash
-curl -X POST "http://localhost:8000/ocr" \
+curl -X POST "http://localhost:18000/ocr" \
   -F "isIdCard=true" \
   -F "frontPhoto=@id_card_front.jpg" \
-  -F "backPhoto=@id_card_back.jpg"
+  -F "backPhoto=@id_card_back.jpg" \
+  -H "Authorization: Bearer TEST123"
 ```
 
 ### Using JavaScript (fetch)
@@ -192,8 +198,11 @@ formData.append('isIdCard', 'true');
 formData.append('frontPhoto', frontPhotoFile);
 formData.append('backPhoto', backPhotoFile);
 
-const response = await fetch('http://localhost:8000/ocr', {
+const response = await fetch('http://localhost:18000/ocr', {
   method: 'POST',
+  headers: {
+    'Authorization': 'Bearer TEST123'
+  },
   body: formData
 });
 
@@ -212,8 +221,8 @@ API documentation is hosted on GitHub Pages:
 ### Local Documentation
 
 When running the server locally:
-- **Swagger UI**: `http://localhost:8000/docs`
-- **ReDoc**: `http://localhost:8000/redoc`
+- **Swagger UI**: `http://localhost:18000/docs`
+- **ReDoc**: `http://localhost:18000/redoc`
 
 ## ⚠️ Disclaimer
 
