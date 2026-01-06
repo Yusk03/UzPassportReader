@@ -5,7 +5,7 @@ from app.parser.passport.parser import parse_passport
 
 
 from app.services.ocr_service import extract_texts
-from app.services.image_processing import read_and_validate_image, extract_qr
+from app.image_processing.preprocessing import read_and_validate_image, extract_qr   
 from app.services.api import app
 
 from app.schemas.ocr_response import OcrResponse, IdCardResponse, PassportResponse
